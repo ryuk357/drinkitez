@@ -12,7 +12,9 @@ class PartyType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('Name')
+            ->add('Name',null, [
+                'label' => 'Nom',
+            ])
         ;
     }
 

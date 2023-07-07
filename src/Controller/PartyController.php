@@ -40,7 +40,7 @@ class PartyController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $partyRepository->add($party, true);
 
-            return $this->redirectToRoute('app_drink_new', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_drink_new', ['partyId' => $party->getId()], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('party/new.html.twig', [
