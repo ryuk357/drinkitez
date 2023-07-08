@@ -3,9 +3,12 @@
 {% block title %}New Drink{% endblock %}
 
 {% block body %}
-    <h1>Create new Drink</h1>
+    <h1>Ajoute tes délicieux breuvages :</h1>
 
     {{ include('drink/_form.html.twig') }}
 
-    <a href="{{ path('app_drink_index') }}">back to list</a>
+    <h2>Liste des boissons :</h2>
+    {# faire une liste avec ajax pour voir les boissons qui s'ajoutent en direct     #}
+    {#<a href="{{ path('app_drink_index') }}">back to list</a>#}
+    <p>Si tu as terminé, clic <a href="">ICI</a> pour génerer le QRCODE</p>
 {% endblock %}

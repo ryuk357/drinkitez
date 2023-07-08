@@ -3,12 +3,14 @@
 namespace App\Controller;
 
 use App\Entity\Drink;
+use App\Entity\Party;
 use App\Form\DrinkType;
 use App\Repository\DrinkRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Doctrine\ORM\EntityManagerInterface;
 
 /**
  * @Route("/drink")
@@ -26,18 +28,19 @@ class DrinkController extends AbstractController
     }
 
     /**
-     * @Route("/new", name="app_drink_new", methods={"GET", "POST"})
+     * @Route("/new/{partyId}", name="app_drink_new", methods={"GET", "POST"})
      */
-    public function new(Request $request, DrinkRepository $drinkRepository): Response
+    public function new(Request $request, DrinkRepository $drinkRepository, $partyId,  EntityManagerInterface $entityManager): Response
     {
         $drink = new Drink();
+        $party = $entityManager->find(Party::class, $partyId);
         $form = $this->createForm(DrinkType::class, $drink);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $drinkRepository->add($drink, true);
 
-            return $this->redirectToRoute('app_drink_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_drink_new', ['partyId' => $party->getId()], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('drink/new.html.twig', [
